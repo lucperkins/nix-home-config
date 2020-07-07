@@ -26,6 +26,7 @@ in {
     fzf
     gitAndTools.gh
     go
+    htop
     httpie
     jq
     ripgrep
