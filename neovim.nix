@@ -11,7 +11,6 @@
       tabular
       vim-elixir
       vim-nix
-      vim-graphql
       vim-markdown
     ];
   };
