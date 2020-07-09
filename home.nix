@@ -51,6 +51,7 @@ in {
     rustup
     shards
     skaffold
+    starship
     terraform
     tilt
     tokei

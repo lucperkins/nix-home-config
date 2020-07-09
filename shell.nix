@@ -41,6 +41,8 @@ in {
       if [ -e ~/.env ]; then
         source ~/.env
       fi
+
+      eval "$(starship init zsh)"
     '';
 
     oh-my-zsh = {
