@@ -41,23 +41,32 @@ in {
     kubectl
     kubectx
     linkerd
+    mdcat
     minikube
     nodejs
+    nushell
     packer
+    procs
     python3
     python38Packages.pip
     ripgrep
     ruby
     rustup
+    sd
     shards
     skaffold
+    spotify-tui
     starship
+    tealdeer
     terraform
     tilt
     tokei
     tree
+    watchexec
+    wrangler
     xsv
     yarn
     youtube-dl
+    zoxide
   ];
 }

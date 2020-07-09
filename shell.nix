@@ -2,6 +2,10 @@
 
 let
   shellAliases = {
+    we = "watchexec";
+    ps = "procs";
+    find = "fd";
+    cloc = "tokei";
     l = "exa";
     ll = "ls -lh";
     ls = "exa";
@@ -43,6 +47,7 @@ in {
       fi
 
       eval "$(starship init zsh)"
+      eval "$(zoxide init zsh)"
     '';
 
     oh-my-zsh = {
