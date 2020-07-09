@@ -9,14 +9,10 @@ let
     dk = "docker";
     k = "kubectl";
     szsh = "source $HOME/.zshrc";
-    reload = "home-manager switch";
+    reload = "home-manager switch && szsh";
+    garbage = "nix-collect-garbage";
   };
 in {
-  home.packages = with pkgs; [
-    bat
-    exa
-  ];
-
   programs.broot = {
     enable = true;
     enableFishIntegration = true;
@@ -31,16 +27,20 @@ in {
     inherit shellAliases;
     enable = true;
     enableAutosuggestions = true;
+    enableCompletion = true;
     history.extended = true;
 
     initExtra = ''
       if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
-      . ~/.nix-profile/etc/profile.d/nix.sh;
-      export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH
+        . ~/.nix-profile/etc/profile.d/nix.sh;
+        export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH
       fi # added by Nix installer
 
-      # Load environment variables
-      source ~/.env
+      # Load environment variables; this approach allows me to not commit secrets
+      # like API keys and such
+      if [ -e ~/.env ]; then
+        source ~/.env
+      fi
     '';
 
     oh-my-zsh = {

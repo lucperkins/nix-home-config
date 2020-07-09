@@ -19,6 +19,8 @@ in {
 
   home.packages = with pkgs; [
     adoptopenjdk-bin
+    bash
+    bat
     bazel
     crystal
     curl
@@ -26,23 +28,31 @@ in {
     direnv
     elixir
     erlang
+    exa
     fd
     fzf
+    gitAndTools.delta
     gitAndTools.gh
     go
     htop
     httpie
     hugo
     jq
+    kubectl
+    kubectx
+    linkerd
     minikube
     nodejs
     packer
     python3
+    python38Packages.pip
     ripgrep
     ruby
     rustup
     shards
+    skaffold
     terraform
+    tilt
     tokei
     tree
     xsv
