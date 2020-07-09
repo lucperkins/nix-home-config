@@ -41,8 +41,10 @@ in {
     kubectl
     kubectx
     linkerd
+    lorri
     mdcat
     minikube
+    niv
     nodejs
     nushell
     packer
