@@ -26,6 +26,7 @@ in {
     curl
     dhall
     direnv
+    doctl
     elixir
     erlang
     exa

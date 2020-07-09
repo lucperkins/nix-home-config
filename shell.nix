@@ -12,6 +12,7 @@ let
     cat = "bat";
     dk = "docker";
     k = "kubectl";
+    dc = "docker-compose";
     szsh = "source $HOME/.zshrc";
     reload = "home-manager switch && szsh";
     garbage = "nix-collect-garbage";
@@ -40,13 +41,17 @@ in {
         export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:}$NIX_PATH
       fi # added by Nix installer
 
-      # Load environment variables; this approach allows me to not commit secrets
-      # like API keys and such
+      # Load environment variables from a file; this approach allows me to not
+      # commit secrets like API keys
       if [ -e ~/.env ]; then
         source ~/.env
       fi
 
+      # Start up Starship shell
       eval "$(starship init zsh)"
+
+      # kubectl autocomplete
+      source <(kubectl completion zsh)
     '';
 
     #oh-my-zsh = {

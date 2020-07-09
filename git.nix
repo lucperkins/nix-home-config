@@ -36,7 +36,7 @@ in {
     };
     extraConfig = {
       core = {
-        editor = "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code --wait";
+        editor = "vim";
         pager = "delta --dark";
         whitespace = "trailing-space,space-before-tab";
       };
