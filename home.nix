@@ -69,6 +69,5 @@ in {
     xsv
     yarn
     youtube-dl
-    zoxide
   ];
 }
