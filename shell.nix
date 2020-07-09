@@ -50,16 +50,16 @@ in {
       eval "$(zoxide init zsh)"
     '';
 
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "docker"
-        "docker-compose"
-        "dotenv"
-        "git"
-        "sudo"
-      ];
-      theme = "muse";
-    };
+    #oh-my-zsh = {
+    #  enable = true;
+    #  plugins = [
+    #    "docker"
+    #    "docker-compose"
+    #    "dotenv"
+    #    "git"
+    #    "sudo"
+    #  ];
+    #  theme = "muse";
+    #};
   };
 }
