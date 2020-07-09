@@ -18,21 +18,35 @@ in {
   imports = baseImports;
 
   home.packages = with pkgs; [
+    adoptopenjdk-bin
+    bazel
+    crystal
     curl
     dhall
     direnv
     elixir
+    erlang
     fd
     fzf
     gitAndTools.gh
     go
     htop
     httpie
+    hugo
     jq
+    minikube
+    nodejs
+    packer
+    python3
     ripgrep
+    ruby
+    rustup
+    shards
+    terraform
     tokei
     tree
     xsv
+    yarn
     youtube-dl
   ];
 }
