@@ -3,7 +3,6 @@
 let
   shellAliases = {
     we = "watchexec";
-    ps = "procs";
     find = "fd";
     cloc = "tokei";
     l = "exa";
@@ -14,8 +13,9 @@ let
     k = "kubectl";
     dc = "docker-compose";
     szsh = "source $HOME/.zshrc";
-    reload = "home-manager switch && szsh";
+    reload = "home-manager switch && source ~/.zshrc";
     garbage = "nix-collect-garbage";
+    installed = "nix-env --query --installed";
   };
 in {
   programs.broot = {
@@ -25,6 +25,7 @@ in {
   };
 
   programs.fish = {
+    inherit shellAliases;
     enable = true;
   };
 
@@ -52,6 +53,9 @@ in {
 
       # kubectl autocomplete
       source <(kubectl completion zsh)
+
+      # direnv setup
+      eval "$(direnv hook zsh)"
     '';
 
     #oh-my-zsh = {

@@ -8,6 +8,7 @@
       ctrlp
       editorconfig-vim
       gruvbox
+      nerdtree
       tabular
       vim-elixir
       vim-nix

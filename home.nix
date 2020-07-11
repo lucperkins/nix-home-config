@@ -7,6 +7,13 @@ let
     ./shell.nix
     ./tmux.nix
   ];
+
+  depends = pkgs.writeScriptBin "depends" ''
+    dep=$1
+    nix-store --query --requisites $(which $dep)
+  '';
+
+
 in {
   nixpkgs.config.allowUnfree = true;
 
@@ -24,6 +31,7 @@ in {
     bazel
     crystal
     curl
+    depends
     dhall
     direnv
     doctl
@@ -49,7 +57,6 @@ in {
     nodejs
     nushell
     packer
-    procs
     python3
     python38Packages.pip
     ripgrep
@@ -70,5 +77,6 @@ in {
     xsv
     yarn
     youtube-dl
+    zig
   ];
 }
