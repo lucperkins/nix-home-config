@@ -8,7 +8,6 @@ let
     l = "exa";
     ll = "ls -lh";
     ls = "exa";
-    cat = "bat";
     dk = "docker";
     k = "kubectl";
     dc = "docker-compose";

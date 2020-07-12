@@ -29,6 +29,8 @@ in {
     bash
     bat
     bazel
+    cargo-edit
+    cargo-graph
     crystal
     curl
     depends
@@ -43,10 +45,12 @@ in {
     gitAndTools.delta
     gitAndTools.gh
     go
+    graphviz
     htop
     httpie
     hugo
     jq
+    just
     kubectl
     kubectx
     linkerd
@@ -65,6 +69,7 @@ in {
     sd
     shards
     skaffold
+    skim
     spotify-tui
     starship
     tealdeer
