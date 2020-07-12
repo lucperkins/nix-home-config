@@ -77,6 +77,5 @@ in {
     xsv
     yarn
     youtube-dl
-    zig
   ];
 }
