@@ -1,3 +1,5 @@
+# Git settings
+
 { config, lib, pkgs, ... }:
 
 let
@@ -8,6 +10,8 @@ in {
     enable = true;
     userName = "Luc Perkins";
     userEmail = "lucperkins@gmail.com";
+
+    # Replaces ~/.gitignore
     ignores = [
       ".DS_Store"
       ".idea/"
@@ -16,6 +20,8 @@ in {
       "dumb.rdb"
       ".elixir_ls/"
     ];
+
+    # Replaces aliases in ~/.gitconfig
     aliases = {
       bd = "branch -D";
       br = "branch";
@@ -34,6 +40,8 @@ in {
       whoops = "reset --hard";
       wipe = "commit -s";
     };
+
+    # Global Git config
     extraConfig = {
       core = {
         editor = "vim";

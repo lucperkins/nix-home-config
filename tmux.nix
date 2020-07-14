@@ -1,3 +1,5 @@
+# tmux settings
+
 { config, lib, pkgs, ... }:
 
 {
@@ -8,6 +10,7 @@
     keyMode = "vi";
     shortcut = "b";
 
+    # Replaces ~/.tmux.conf
     extraConfig = ''
       set-option -g mouse on
       set-option -g default-shell ''${SHELL}
