@@ -28,12 +28,14 @@ in {
   # Pull in other config files
   imports = baseImports;
 
-  # Miscellaneous packages
+  # Miscellaneous packages (in alphabetical order)
   home.packages = with pkgs; [
     adoptopenjdk-bin # Java
+    antora # AsciiDoc static site generator
     bash # /bin/bash
     bat # cat replacement written in Rust
-    bazel # Polyglot build tool from Google
+    bazelisk # Polyglot build tool from Google
+    buildpack # Cloud Native buildpacks
     cargo-edit # Easy Rust dependency management
     cargo-graph # Rust dependency graphs
     crystal # Like Ruby but faster and with types
@@ -66,6 +68,7 @@ in {
     nodejs # node and npm
     nushell # Experimental shell
     packer # HashiCorp tool for building machine images
+    prometheus # Monitoring system
     python3 # Have you upgraded yet???
     python38Packages.pip # pip installer
     ripgrep # grep replacement written in Rust

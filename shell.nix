@@ -5,7 +5,10 @@
 let
   # Set all shell aliases programatically
   shellAliases = {
+    # Invoke global just commands
     ".j" = "just --justfile ~/.justfile --working-directory ~";
+
+    # Aliases for commonly used tools
     we = "watchexec";
     find = "fd";
     cloc = "tokei";
@@ -16,9 +19,18 @@ let
     dk = "docker";
     k = "kubectl";
     dc = "docker-compose";
+    bazel = "bazelisk";
+
+    # Reload zsh
     szsh = "source ~/.zshrc";
+
+    # Reload home manager and zsh
     reload = "home-manager switch && source ~/.zshrc";
+
+    # Nix garbage collection
     garbage = "nix-collect-garbage";
+
+    # See which Nix packages are installed
     installed = "nix-env --query --installed";
   };
 in {
