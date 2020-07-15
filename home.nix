@@ -38,6 +38,7 @@ in {
     buildpack # Cloud Native buildpacks
     cargo-edit # Easy Rust dependency management
     cargo-graph # Rust dependency graphs
+    consul # Service discovery et al
     crystal # Like Ruby but faster and with types
     curl # An old classic
     depends # Defined above
@@ -60,15 +61,18 @@ in {
     just # Intriguing new make replacement
     kubectl # Kubernetes CLI tool
     kubectx # kubectl context switching
-    linkerd # My favorite service mesh
+    kubernetes-helm # Kubernetes package manager
     lorri # nix-env for your projects
+    lua5 # My second-favorite language from Brazil
     mdcat # Markdown converter/reader for the CLI
     minikube # Local Kubernetes
     niv # Nix dependency management
     nodejs # node and npm
+    nomad # Lightweight scheduler
     nushell # Experimental shell
     packer # HashiCorp tool for building machine images
     prometheus # Monitoring system
+    protobuf # Protocol Buffers
     python3 # Have you upgraded yet???
     python38Packages.pip # pip installer
     ripgrep # grep replacement written in Rust
@@ -85,6 +89,7 @@ in {
     tilt # Fast-paced Kubernetes development
     tokei # Handy tool to see lines of code by language
     tree # Should be included in macOS but it's not
+    vault # Secret management
     watchexec # Fileystem watcher/executor useful for speedy development
     wget # File getter
     wrangler # CloudFlare Workers CLI tool
