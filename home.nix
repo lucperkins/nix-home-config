@@ -25,9 +25,6 @@ in {
   home.homeDirectory = "/Users/lucasperkins";
   home.stateVersion = "20.09";
 
-  # Enable the Lorri daemon
-  programs.lorri.enable = true;
-
   # Pull in other config files
   imports = baseImports;
 
