@@ -7,6 +7,7 @@ let
     ./neovim.nix
     ./shell.nix
     ./tmux.nix
+    ./vscode.nix
   ];
 
   # Handly shell command to view the dependency tree of Nix packages
@@ -21,8 +22,8 @@ in {
   # Enable Home Manager
   programs.home-manager.enable = true;
 
-  home.username = "lucasperkins";
-  home.homeDirectory = "/Users/lucasperkins";
+  home.username = "lucperkins";
+  home.homeDirectory = "/Users/lucperkins";
   home.stateVersion = "20.09";
 
   # Pull in other config files

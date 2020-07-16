@@ -20,6 +20,7 @@ let
     k = "kubectl";
     dc = "docker-compose";
     bazel = "bazelisk";
+    md = "mdcat";
 
     # Reload zsh
     szsh = "source ~/.zshrc";

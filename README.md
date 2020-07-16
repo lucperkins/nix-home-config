@@ -25,6 +25,10 @@ This repo houses the [Home Manager](https://github.com/rycee/home-manager) confi
 
 This list will surely grow over time as new packages are installed.
 
+## Debts
+
+This config is heavily indebted to [srid/nix-config](https://github.com/srid/nix-config).
+
 ## Usage
 
 To use these configs yourself as a starter:
@@ -35,3 +39,4 @@ To use these configs yourself as a starter:
 1. `rm -rf nixpkgs`
 1. `git clone https://github.com/lucperkins/nix-home-config nixpkgs`
 1. `home-manager switch && source ~/.zshrc`
+
