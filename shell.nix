@@ -5,14 +5,18 @@
 let
   # Set all shell aliases programatically
   shellAliases = {
-    # Invoke global just commands
-    ".j" = "just --justfile ~/.justfile --working-directory ~";
-
     # Aliases for commonly used tools
+    lorri-start = "lorri daemon &";
+    lorri-kill = "pgrep -f lorri | xargs kill -9";
+    grep = "grep --color=auto";
+    circleci = "circleci-cli";
+    just = "just --no-dotenv";
+    diff = "diff --color=auto";
+    iex = "iex --dot-iex ~/.iex.exs";
+    cat = "bat";
     we = "watchexec";
     find = "fd";
     cloc = "tokei";
-    j = "just";
     l = "exa";
     ll = "ls -lh";
     ls = "exa";
@@ -21,6 +25,9 @@ let
     dc = "docker-compose";
     bazel = "bazelisk";
     md = "mdcat";
+    mk = "minikube";
+    start-docker = "docker-machine start default";
+    tf = "terraform";
 
     # Reload zsh
     szsh = "source ~/.zshrc";
@@ -29,7 +36,7 @@ let
     reload = "home-manager switch && source ~/.zshrc";
 
     # Nix garbage collection
-    garbage = "nix-collect-garbage";
+    garbage = "nix-collect-garbage -d";
 
     # See which Nix packages are installed
     installed = "nix-env --query --installed";
@@ -73,14 +80,28 @@ in {
       # Start up Starship shell
       eval "$(starship init zsh)"
 
-      # kubectl autocomplete
+      # Autocomplete for various utilities
+      source <(helm completion zsh)
       source <(kubectl completion zsh)
+      source <(doctl completion zsh)
+      source <(minikube completion zsh)
+      source <(gh completion --shell zsh)
+      rustup completions zsh > ~/.zfunc/_rustup
+      source <(humioctl completion zsh)
 
       # direnv setup
       eval "$(direnv hook zsh)"
 
-      # Load global justfile
-      alias .j='just --justfile ~/.justfile --working-directory ~'
+      # Start up Docker daemon if not running
+      if [ $(docker-machine status default) != "Running" ]; then
+        docker-machine start default
+      fi
+
+      # Docker env
+      eval "$(docker-machine env default)"
+
+      # Load asdf
+      . ~/.asdf/asdf.sh
     '';
 
     # Disable oh my zsh in favor of Starship shell
