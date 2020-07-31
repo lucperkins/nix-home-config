@@ -20,6 +20,10 @@ let
     nix-prefetch-url --unpack https://github.com/$1/$2/archive/$3.tar.gz
   '';
 
+  services = {
+    lorri.enable = true;
+  };
+
   hugoLocal = pkgs.callPackage ./hugo.nix {
     hugoVersion = "0.74.3";
     sha = "0rikr4yrjvmrv8smvr8jdbcjqwf61y369wn875iywrj63pyr74r9";
@@ -30,6 +34,8 @@ let
     depends
     git-hash
   ];
+
+  programs.gnupg.agent.enable = true;
 
   pythonPackages = with pkgs.python38Packages; [
     bpython
@@ -44,6 +50,13 @@ let
     jekyll-watch
     rails
   ];
+
+  gitTools = with pkgs.gitAndTools; [
+    delta
+    diff-so-fancy
+    gh
+  ];
+
 in {
   # Allow non-free (as in beer) packages
   nixpkgs.config.allowUnfree = true;
@@ -61,6 +74,39 @@ in {
 
   # Golang
   programs.go.enable = true;
+
+  # Alacritty
+  programs.alacritty = {
+    enable = true;
+    settings = lib.attrsets.recursiveUpdate (import ./alacritty.nix) {
+      shell.program = "zsh";
+
+      env = {
+        "TERM" = "xterm-256color";
+      };
+
+      background_opacity = 0.95;
+
+      window = {
+        padding.x = 10;
+        padding.y = 10;
+        decorations = "buttonless";
+      };
+
+      font = {
+        size = 12.0;
+        normal.family = "FiraCode Nerd Font";
+        bold.family = "FiraCode Nerd Font";
+        italic.family = "FiraCode Nerd Font";
+      };
+    };
+  };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "alacritty";
+  };
 
   # Miscellaneous packages (in alphabetical order)
   home.packages = with pkgs; [
@@ -81,8 +127,10 @@ in {
     circleci-cli
     consul # Service discovery et al
     crystal # Like Ruby but faster and with types
+    cue # Experimental configuration language
     curl # An old classic
     dhall # Exotic, Nix-like configuration language
+    dhall-json
     direnv # Per-directory environment variables
     doctl # DigitalOcean CLI tool
     docker # World's #1 container tool
@@ -93,8 +141,6 @@ in {
     exa # ls replacement written in Rust
     fd # find replacement written in Rust
     fzf # Fuzzy finder
-    gitAndTools.delta # Print Git diffs
-    gitAndTools.gh # Official GitHub CLI tool
     google-cloud-sdk # Google Cloud Platform CLI
     graphviz # dot
     gnupg # gpg
@@ -102,21 +148,25 @@ in {
     httpie # Like curl but more user friendly
     hugoLocal # Best static site generator ever
     jq # JSON parsing for the CLI
+    jsonnet
     just # Intriguing new make replacement
     kind # Easy Kubernetes installation
     kubectl # Kubernetes CLI tool
     kubectx # kubectl context switching
     kubernetes-helm # Kubernetes package manager
-    lorri # nix-env for your projects
+    lorri
     lua5 # My second-favorite language from Brazil
     mdcat # Markdown converter/reader for the CLI
     minikube # Local Kubernetes
+    ngrok
     niv # Nix dependency management
     nodejs # node and npm
     nomad # Lightweight scheduler
     nushell # Experimental shell
     open-policy-agent # Policy with Rego
     packer # HashiCorp tool for building machine images
+    pinentry_mac # Necessary for GPG
+    podman
     pre-commit # Pre-commit CI hook tool
     prometheus # Monitoring system
     protobuf # Protocol Buffers
@@ -148,5 +198,5 @@ in {
     yarn # Node.js package manager
     youtube-dl # Download videos
     zola # Static site generator written in Rust
-  ] ++ pythonPackages ++ rubyPackages ++ scripts;
+  ] ++ gitTools ++ pythonPackages ++ rubyPackages ++ scripts;
 }

@@ -6,8 +6,7 @@ let
   # Set all shell aliases programatically
   shellAliases = {
     # Aliases for commonly used tools
-    lorri-start = "lorri daemon &";
-    lorri-kill = "pgrep -f lorri | xargs kill -9";
+    hm = "humioctl";
     grep = "grep --color=auto";
     circleci = "circleci-cli";
     just = "just --no-dotenv";
@@ -36,7 +35,7 @@ let
     reload = "home-manager switch && source ~/.zshrc";
 
     # Nix garbage collection
-    garbage = "nix-collect-garbage -d";
+    garbage = "nix-collect-garbage -d && docker image prune --force";
 
     # See which Nix packages are installed
     installed = "nix-env --query --installed";
@@ -87,7 +86,8 @@ in {
       source <(minikube completion zsh)
       source <(gh completion --shell zsh)
       rustup completions zsh > ~/.zfunc/_rustup
-      source <(humioctl completion zsh)
+      source <(cue completion zsh)
+      source <(npm completion zsh)
 
       # direnv setup
       eval "$(direnv hook zsh)"
@@ -102,6 +102,9 @@ in {
 
       # Load asdf
       . ~/.asdf/asdf.sh
+
+      # direnv hook
+      eval "$(direnv hook zsh)"
     '';
 
     # Disable oh my zsh in favor of Starship shell
