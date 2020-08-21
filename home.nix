@@ -1,8 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
+  nigpkgsRev = "nixpkgs-unstable";
+  pkgs = import (fetchTarball "https://github.com/nixos/nixpkgs/archive/${nigpkgsRev}.tar.gz") {};
+
   # Import other Nix files
-  baseImports = [
+  imports = [
     ./git.nix
     ./neovim.nix
     ./shell.nix
@@ -16,13 +19,18 @@ let
     nix-store --query --requisites $(which $dep)
   '';
 
+
   git-hash = pkgs.writeScriptBin "git-hash" ''
     nix-prefetch-url --unpack https://github.com/$1/$2/archive/$3.tar.gz
   '';
 
-  services = {
-    lorri.enable = true;
-  };
+  wo = pkgs.writeScriptBin "wo" ''
+    readlink $(which $1)
+  '';
+
+  run = pkgs.writeScriptBin "run" ''
+    nix-shell --pure --run "$@"
+  '';
 
   hugoLocal = pkgs.callPackage ./hugo.nix {
     hugoVersion = "0.74.3";
@@ -33,9 +41,9 @@ let
   scripts = [
     depends
     git-hash
+    run
+    wo
   ];
-
-  programs.gnupg.agent.enable = true;
 
   pythonPackages = with pkgs.python38Packages; [
     bpython
@@ -48,63 +56,41 @@ let
   rubyPackages = with pkgs.rubyPackages_2_7; [
     jekyll
     jekyll-watch
+    pry
     rails
   ];
 
   gitTools = with pkgs.gitAndTools; [
     delta
     diff-so-fancy
+    git-codeowners
+    gitflow
     gh
   ];
 
 in {
+  inherit imports;
+
   # Allow non-free (as in beer) packages
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnsupportedSystem = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnsupportedSystem = true;
+  };
 
   # Enable Home Manager
   programs.home-manager.enable = true;
 
-  home.username = "lucperkins";
-  home.homeDirectory = "/Users/lucperkins";
-  home.stateVersion = "20.09";
-
-  # Pull in other config files
-  imports = baseImports;
+  home = {
+    username = "lucperkins";
+    homeDirectory = "/Users/lucperkins";
+    stateVersion = "20.09";
+  };
 
   # Golang
   programs.go.enable = true;
 
-  # Alacritty
-  programs.alacritty = {
-    enable = true;
-    settings = lib.attrsets.recursiveUpdate (import ./alacritty.nix) {
-      shell.program = "zsh";
-
-      env = {
-        "TERM" = "xterm-256color";
-      };
-
-      background_opacity = 0.95;
-
-      window = {
-        padding.x = 10;
-        padding.y = 10;
-        decorations = "buttonless";
-      };
-
-      font = {
-        size = 12.0;
-        normal.family = "FiraCode Nerd Font";
-        bold.family = "FiraCode Nerd Font";
-        italic.family = "FiraCode Nerd Font";
-      };
-    };
-  };
-
   home.sessionVariables = {
     EDITOR = "nvim";
-    BROWSER = "firefox";
     TERMINAL = "alacritty";
   };
 
@@ -124,13 +110,13 @@ in {
     cargo-edit # Easy Rust dependency management
     cargo-graph # Rust dependency graphs
     cargo-watch # Watch a Rust project and execute custom commands upon change
-    circleci-cli
+    circleci-cli # Run CirleCI locally
+    conftest
     consul # Service discovery et al
-    crystal # Like Ruby but faster and with types
+    #crystal # Like Ruby but faster and with types
     cue # Experimental configuration language
     curl # An old classic
     dhall # Exotic, Nix-like configuration language
-    dhall-json
     direnv # Per-directory environment variables
     doctl # DigitalOcean CLI tool
     docker # World's #1 container tool
@@ -140,36 +126,45 @@ in {
     erlang # OTP with weird syntax
     exa # ls replacement written in Rust
     fd # find replacement written in Rust
+    fluxctl # GitOps operator
     fzf # Fuzzy finder
     google-cloud-sdk # Google Cloud Platform CLI
     graphviz # dot
     gnupg # gpg
+    gradle
+    heroku
     htop # Resource monitoring
     httpie # Like curl but more user friendly
     hugoLocal # Best static site generator ever
+    humioctl # Humio logging CLI tool
     jq # JSON parsing for the CLI
-    jsonnet
+    jsonnet # Easy config language
     just # Intriguing new make replacement
     kind # Easy Kubernetes installation
+    kompose
+    kotlin
     kubectl # Kubernetes CLI tool
     kubectx # kubectl context switching
     kubernetes-helm # Kubernetes package manager
-    lorri
+    kustomize
+    lorri # Easy Nix shell
     lua5 # My second-favorite language from Brazil
     mdcat # Markdown converter/reader for the CLI
     minikube # Local Kubernetes
-    ngrok
+    ngrok # Expose local HTTP stuff publicly
     niv # Nix dependency management
+    nix-serve
+    nixos-generators
     nodejs # node and npm
     nomad # Lightweight scheduler
     nushell # Experimental shell
-    open-policy-agent # Policy with Rego
     packer # HashiCorp tool for building machine images
     pinentry_mac # Necessary for GPG
-    podman
+    podman # Docker alternative
     pre-commit # Pre-commit CI hook tool
-    prometheus # Monitoring system
+    #prometheus # Monitoring system
     protobuf # Protocol Buffers
+    prow
     pulumi-bin # Infrastructure as code
     python3 # Have you upgraded yet???
     rebar3 # Erlang build
@@ -191,8 +186,9 @@ in {
     vault # Secret management
     vgo2nix # Package Go modules projects
     vscode # My fav text editor if I'm being honest
+    wasmer
+    wget
     watchexec # Fileystem watcher/executor useful for speedy development
-    wget # File getter
     wrangler # CloudFlare Workers CLI tool
     xsv # CSV file parsing utility
     yarn # Node.js package manager

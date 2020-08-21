@@ -20,11 +20,14 @@ in {
       "built-in-stubs.jar"
       "dumb.rdb"
       ".elixir_ls/"
-      ".vsode/"
+      ".vscode/"
+      "npm-debug.log"
+      "shell.nix"
     ];
 
     # Replaces aliases in ~/.gitconfig
     aliases = {
+      ba = "branch -a";
       bd = "branch -D";
       br = "branch";
       cam = "commit -am";

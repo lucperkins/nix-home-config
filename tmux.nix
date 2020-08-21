@@ -15,6 +15,9 @@
       set-option -g mouse on
       set-option -g default-shell ''${SHELL}
 
+      set -g mode-keys emacs
+      set -g status-keys emacs
+
       bind Escape copy-mode
 
       bind | split-window -h -c "#{pane_current_path}"
